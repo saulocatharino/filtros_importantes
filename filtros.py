@@ -3,14 +3,13 @@ import numpy as np
 
 
 color = ('b','g','r')
-cap = cv2.VideoCapture('vinhetas.mp4')
+cap = cv2.VideoCapture('test.mp4')
 ratio = .50
 
 
 
 lsd = cv2.createLineSegmentDetector(0)
-lsd2 = cv2.createLineSegmentDetector(1)
-lsd3 = cv2.createLineSegmentDetector(2)
+
 prev = cap.read()[1]
 
 stripz = np.zeros_like(prev)
@@ -33,25 +32,13 @@ while True:
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 	lines = lsd.detect(gray)[0]
-	lines2 = lsd2.detect(gray)[0] 
-	lines3 = lsd3.detect(gray)[0]
+
 	for dline in lines:
 		    x0, y0, x1, y1 = dline.flatten()
 
 		    cv2.line(black, (x0, y0), (x1,y1), (0,0,0), 1, cv2.LINE_AA)
 		    cv2.line(img2, (x0, y0), (x1,y1), (0,255,255), 1, cv2.LINE_AA)
 
-	for dline in lines2:
-		    x0, y0, x1, y1 = dline.flatten()
-
-		    cv2.line(black, (x0, y0), (x1,y1), (50,50,50), 1, cv2.LINE_AA)
-		    cv2.line(img2, (x0, y0), (x1,y1), (255,0,255), 1, cv2.LINE_AA)
-
-	for dline in lines3:
-		    x0, y0, x1, y1 = dline.flatten()
-
-		    cv2.line(black, (x0, y0), (x1,y1), (100,100,100), 1, cv2.LINE_AA)
-		    cv2.line(img2, (x0, y0), (x1,y1), (255,255,0), 1, cv2.LINE_AA)
 
 	old_strip = cv2.hconcat([old_strip, cv2.resize(img,(int(old_strip.shape[1]/10),int(old_strip.shape[0])))])
 	old_strip = old_strip[0:old_strip.shape[1]*20,old_strip.shape[0]:old_strip.shape[0]*21]
@@ -67,4 +54,3 @@ while True:
 	k = cv2.waitKey(1)
 	if k == ord('q'):
 		exit()
-
