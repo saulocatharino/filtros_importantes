@@ -1,1 +1,5 @@
-# filtros_importantes
+# filtros importantes
+</br>
+Dependencias:</br>
+OpenCV</br>
+Numpy</br>
